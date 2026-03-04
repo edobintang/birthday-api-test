@@ -29,7 +29,10 @@ Backend API and worker that store users and send birthday messages at 9 AM in ea
 }
 ```
 
-### Get User
+### Get Users
+`GET /users`
+
+### Get User By ID
 `GET /users/{id}`
 
 ### Update User
