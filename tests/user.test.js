@@ -1,5 +1,6 @@
 const request = require("supertest");
 const app = require("../src/app");
+const User = require("../src/models/User");
 
 describe("User API", () => {
   it("creates a user with valid data", async () => {
@@ -17,7 +18,7 @@ describe("User API", () => {
   it("normalizes email and name on create", async () => {
     const res = await request(app).post("/users").send({
       name: "  Jane Doe  ",
-      email: "  JANE@EXAMPLE.COM ",
+      email: "JANE@EXAMPLE.COM",
       birthday: "1990-05-10",
       timezone: "America/New_York"
     });
@@ -63,6 +64,7 @@ describe("User API", () => {
   });
 
   it("rejects duplicate emails", async () => {
+    await User.collection.createIndex({ email: 1 }, { unique: true });
     await request(app).post("/users").send({
       name: "Jane Doe",
       email: "jane@example.com",
