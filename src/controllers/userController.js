@@ -24,6 +24,15 @@ async function createUser(req, res, next) {
   }
 }
 
+async function getUsers(req, res, next) {
+  try {
+    const users = await User.find();
+    return res.status(200).json(users);
+  } catch (err) {
+    return next(err);
+  }
+}
+
 async function getUser(req, res, next) {
   try {
     const user = await User.findById(req.params.id);
@@ -83,6 +92,7 @@ async function deleteUser(req, res, next) {
 
 module.exports = {
   createUser,
+  getUsers,
   getUser,
   updateUser,
   deleteUser
